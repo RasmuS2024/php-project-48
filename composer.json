@@ -1,0 +1,18 @@
+{
+    "name": "hexlet/code",
+    "description": "My 2 project on Hexlet",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Hexlet\\Code\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "RasmuS2024",
+            "email": "rasburkhanov@yandex.ru"
+        }
+    ],
+    "require": {}
+}
