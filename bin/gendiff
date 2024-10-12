@@ -1,0 +1,38 @@
+#!/usr/bin/env php
+
+<?php
+
+$autoloadPath1 = __DIR__ . '/../../../autoload.php';
+$autoloadPath2 = __DIR__ . '/../vendor/autoload.php';
+if (file_exists($autoloadPath1)) {
+    require_once $autoloadPath1;
+} else {
+    require_once $autoloadPath2;
+}
+
+use function GenDiff\Parser\parsingJson;
+
+$doc = <<<DOC
+Generate diff
+
+Usage:
+  gendiff (-h | --help)
+  gendiff (-v | --version)
+  gendiff [--format <fmt>] <firstFile> <secondFile>
+
+Options:
+  -h --help              Show this screen.
+  -v --version           Show version.
+  --format <fmt>         Report format [default: json]
+DOC;
+
+$args = Docopt::handle($doc, array('version'=>'Generate diff version 0.1 (12.10.2024)'))->args;
+foreach ($args as $k=>$v) {
+    echo $k.': '.json_encode($v).PHP_EOL;
+}
+if (array_key_exists("<firstFile>", $args)) {
+    parsingJson($args['<firstFile>'], $args['--format']);
+} 
+if (array_key_exists('<firstFile>', $args)) {
+    parsingJson($args['<secondFile>'], $args['--format']);
+}

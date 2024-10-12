@@ -1,6 +1,6 @@
 {
     "name": "hexlet/code",
-    "description": "My 2 project on Hexlet",
+    "description": "My 2 project on Hexlet - Gendiff",
     "type": "project",
     "license": "MIT",
     "autoload": {
@@ -14,5 +14,10 @@
             "email": "rasburkhanov@yandex.ru"
         }
     ],
-    "require": {}
+    "require": {
+        "docopt/docopt": "^1.0"
+    },
+        "bin": [
+        "bin/gendiff"
+    ]
 }
