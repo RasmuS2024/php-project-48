@@ -30,9 +30,7 @@ $args = Docopt::handle($doc, array('version'=>'Generate diff version 0.1 (12.10.
 foreach ($args as $k=>$v) {
     echo $k.': '.json_encode($v).PHP_EOL;
 }
-if (array_key_exists("<firstFile>", $args)) {
-    parsingJson($args['<firstFile>'], $args['--format']);
-} 
-if (array_key_exists('<firstFile>', $args)) {
-    parsingJson($args['<secondFile>'], $args['--format']);
+
+if (array_key_exists("<firstFile>", $args) & array_key_exists('<secondFile>', $args)) {
+    parsingJson($args['<firstFile>'], $args['<secondFile>'], $args['--format']);
 }
