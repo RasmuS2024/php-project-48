@@ -1,5 +1,5 @@
 install:
-	composer install
+	composer install --ignore-platform-req=php+
 
 validate:
 	composer validate
