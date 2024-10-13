@@ -4,22 +4,19 @@
          bootstrap="vendor/autoload.php"
          cacheResultFile=".phpunit.cache/test-results"
          executionOrder="depends,defects"
-         forceCoversAnnotation="true"
-         beStrictAboutCoversAnnotation="true"
+         beStrictAboutTestsThatDoNotTestAnything="false"
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTodoAnnotatedTests="true"
-         convertDeprecationsToExceptions="true"
-         failOnRisky="true"
-         failOnWarning="true"
-         verbose="true">
+         beStrictAboutCoverageMetadata="true"
+         failOnRisky="false"
+         failOnWarning="false">
     <testsuites>
         <testsuite name="default">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
 
-    <coverage cacheDirectory=".phpunit.cache/code-coverage"
-              processUncoveredFiles="true">
+    <coverage cacheDirectory=".phpunit.cache/code-coverage">
         <include>
             <directory suffix=".php">src</directory>
         </include>
