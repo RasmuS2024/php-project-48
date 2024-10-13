@@ -2,14 +2,14 @@
 
 namespace GenDiff\Diff;
 
-function verifyKeys(array $json, string $key): mixed
+function returnValue(array $json, string $key): mixed
 {
     if (isset($json[$key])) {
-        $tkey = $json[$key];
-        if (is_bool($tkey)) {
-            $tkey = ($tkey == 1) ? 'true' : 'false';
+        $value = $json[$key];
+        if (is_bool($value)) {
+            $value = ($value == 1) ? 'true' : 'false';
         }
-        return $tkey;
+        return $value;
     } else {
         return false;
     }
@@ -33,25 +33,24 @@ function filesDiff(string $file1Path, string $file2Path, string $parsingFormat =
     $keys = getSortedKeys($json1, $json2);
     $res = "{\n";
     foreach ($keys as $key) {
-        $tkey1 = verifyKeys($json1, $key);
-        $tkey2 = verifyKeys($json2, $key);
-        if ($tkey1) {
-            if ($tkey2) {
-                if ($tkey1 === $tkey2) {
-                    $res = "{$res}    {$key}: {$tkey1}\n";
+        $value1 = returnValue($json1, $key);
+        $value2 = returnValue($json2, $key);
+        if ($value1) {
+            if ($value2) {
+                if ($value1 === $value2) {
+                    $res = "{$res}    {$key}: {$value1}\n";
                 } else {
-                    $res = "{$res}  - {$key}: {$tkey1}\n";
-                    $res = "{$res}  + {$key}: {$tkey2}\n";
+                    $res = "{$res}  - {$key}: {$value1}\n";
+                    $res = "{$res}  + {$key}: {$value2}\n";
                 }
             } else {
-                $res = "{$res}  - {$key}: {$tkey1}\n";
+                $res = "{$res}  - {$key}: {$value1}\n";
             }
         } else {
-            if ($tkey2) {
-                $res = "{$res}  + {$key}: {$tkey2}\n";
+            if ($value2) {
+                $res = "{$res}  + {$key}: {$value2}\n";
             }
         }
     }
-    $res = "{$res}}";
-    return $res;
+    return "{$res}}"
 }
