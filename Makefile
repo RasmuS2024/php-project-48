@@ -1,3 +1,6 @@
+update:
+	composer update
+	
 install:
 	composer install
 

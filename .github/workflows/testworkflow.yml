@@ -11,6 +11,7 @@ jobs:
       # экшен — выполняет какую-то задачу
       # checkout — клонирует репозиторий
       - uses: actions/checkout@v4
+      - run: make update
       - run: make install
       - run: make test
       - run: make lint
