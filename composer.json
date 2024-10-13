@@ -19,7 +19,8 @@
         }
     ],
     "require": {
-        "docopt/docopt": "^1.0"
+        "docopt/docopt": "^1.0",
+        "php": "8.3.11"
     },
         "bin": [
         "bin/gendiff"
