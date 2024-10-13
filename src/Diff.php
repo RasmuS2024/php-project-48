@@ -11,9 +11,8 @@ function verifyKeys(array $json, string $key): mixed
         }
         return $tkey;
     } else {
-    	return false;
+        return false;
     }
-    
 }
 
 function getSortedKeys(array $json1, array $json2): array
@@ -49,7 +48,7 @@ function filesDiff(string $file1Path, string $file2Path, string $parsingFormat =
             }
         } else {
             if ($tkey2) {
-            	$res = "{$res}  + {$key}: {$tkey2}\n";
+                $res = "{$res}  + {$key}: {$tkey2}\n";
             }
         }
     }
