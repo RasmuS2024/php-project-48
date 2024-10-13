@@ -52,5 +52,5 @@ function filesDiff(string $file1Path, string $file2Path, string $parsingFormat =
             }
         }
     }
-    return "{$res}}"
+    return "{$res}}";
 }
