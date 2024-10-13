@@ -19,7 +19,7 @@ jobs:
       # https://github.com/paambaati/codeclimate-action
       # NOTE: uncomment for using workflow
       - name: Run test & publish code coverage
-        uses: paambaati/codeclimate-action@v5
+        uses: paambaati/codeclimate-action@v9
         # Add Code Climate secret key
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
