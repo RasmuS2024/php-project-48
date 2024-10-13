@@ -11,8 +11,6 @@ jobs:
       # экшен — выполняет какую-то задачу
       # checkout — клонирует репозиторий
       - uses: actions/checkout@v4
-      - run: npm ci
-      - run: npm test
       - run: make setup
       - run: make test
       - run: make lint
