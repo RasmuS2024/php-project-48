@@ -10,7 +10,7 @@ if (file_exists($autoloadPath1)) {
     require_once $autoloadPath2;
 }
 
-use function GenDiff\Parser\parsingJson;
+use function GenDiff\Diff\filesDiff;
 
 $doc = <<<DOC
 Generate diff
@@ -27,10 +27,14 @@ Options:
 DOC;
 
 $args = Docopt::handle($doc, array('version'=>'Generate diff version 0.1 (12.10.2024)'))->args;
+
+/*
 foreach ($args as $k=>$v) {
     echo $k.': '.json_encode($v).PHP_EOL;
 }
+*/
 
 if (array_key_exists("<firstFile>", $args) & array_key_exists('<secondFile>', $args)) {
-    parsingJson($args['<firstFile>'], $args['<secondFile>'], $args['--format']);
+    $result = filesDiff($args['<firstFile>'], $args['<secondFile>'], $args['--format']);
+    echo $result."\n";
 }
