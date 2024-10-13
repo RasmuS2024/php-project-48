@@ -1,10 +1,10 @@
 <?php
 
-namespace GenDiff\Diff;
+namespace GenDiff\Parsers;
 
 use PHPUnit\Framework\TestCase;
 
-use function GenDiff\Diff\filesDiff;
+use function GenDiff\Parsers\filesDiff;
 
 class DiffTest extends TestCase
 {
@@ -17,11 +17,20 @@ class DiffTest extends TestCase
         return realpath(implode('/', $parts));
     }
 
-    public function testFilesDiff(): void
+    public function testFilesDiffJson(): void
     {
         $pathToFile1 = $this->getFixtureFullPath('file1.json');
         $pathToFile2 = $this->getFixtureFullPath('file2.json');
         $pathToFile3 = $this->getFixtureFullPath('file3.txt');
+        $diffStringFromFiles = filesDiff($pathToFile1, $pathToFile2);
+        $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
+    }
+
+    public function testFilesDiffYaml(): void
+    {
+        $pathToFile1 = $this->getFixtureFullPath('file1.yaml');
+        $pathToFile2 = $this->getFixtureFullPath('file2.yml');
+        $pathToFile3 = $this->getFixtureFullPath('yamlres.txt');
         $diffStringFromFiles = filesDiff($pathToFile1, $pathToFile2);
         $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
     }

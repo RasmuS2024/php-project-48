@@ -1,6 +1,8 @@
 <?php
 
-namespace GenDiff\Diff;
+namespace GenDiff\Parsers;
+
+use Symfony\Component\Yaml\Yaml;
 
 function returnValue(array $json, string $key): mixed
 {
@@ -25,11 +27,21 @@ function getSortedKeys(array $json1, array $json2): array
     return $keys;
 }
 
+function fileReader(string $pathToFile): array
+{
+    $extension = pathinfo($pathToFile)['extension'];
+    return match ($extension) {
+        'json' => json_decode(file_get_contents($pathToFile), true),
+        'yaml' => Yaml::parseFile($pathToFile),
+        'yml' => Yaml::parseFile($pathToFile),
+        default => '',
+    };
+}
 
 function filesDiff(string $file1Path, string $file2Path, string $parsingFormat = 'json'): string
 {
-    $json1 = json_decode(file_get_contents($file1Path), true);
-    $json2 = json_decode(file_get_contents($file2Path), true);
+    $json1 = fileReader($file1Path);
+    $json2 = fileReader($file2Path);
     $keys = getSortedKeys($json1, $json2);
     $res = "{\n";
     foreach ($keys as $key) {
