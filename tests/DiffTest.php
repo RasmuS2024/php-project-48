@@ -26,6 +26,15 @@ class DiffTest extends TestCase
         $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
     }
 
+    public function testFilesDiffJson2(): void
+    {
+        $pathToFile1 = $this->getFixtureFullPath('2/file1.json');
+        $pathToFile2 = $this->getFixtureFullPath('2/file2.json');
+        $pathToFile3 = $this->getFixtureFullPath('2/result.txt');
+        $diffStringFromFiles = filesDiff($pathToFile1, $pathToFile2);
+        $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
+    }
+
     public function testFilesDiffYaml(): void
     {
         $pathToFile1 = $this->getFixtureFullPath('file1.yaml');
