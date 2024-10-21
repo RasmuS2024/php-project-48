@@ -4,7 +4,7 @@ namespace GenDiff\Parsers;
 
 use PHPUnit\Framework\TestCase;
 
-use function GenDiff\Parsers\filesDiff;
+use function GenDiff\Parsers\genDiff;
 
 class DiffTest extends TestCase
 {
@@ -22,7 +22,7 @@ class DiffTest extends TestCase
         $pathToFile1 = $this->getFixtureFullPath('file1.json');
         $pathToFile2 = $this->getFixtureFullPath('file2.json');
         $pathToFile3 = $this->getFixtureFullPath('file3.txt');
-        $diffStringFromFiles = filesDiff($pathToFile1, $pathToFile2);
+        $diffStringFromFiles = genDiff($pathToFile1, $pathToFile2);
         $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
     }
 
@@ -31,7 +31,7 @@ class DiffTest extends TestCase
         $pathToFile1 = $this->getFixtureFullPath('2/file1.json');
         $pathToFile2 = $this->getFixtureFullPath('2/file2.json');
         $pathToFile3 = $this->getFixtureFullPath('2/result.txt');
-        $diffStringFromFiles = filesDiff($pathToFile1, $pathToFile2);
+        $diffStringFromFiles = genDiff($pathToFile1, $pathToFile2);
         $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
     }
 
@@ -40,7 +40,7 @@ class DiffTest extends TestCase
         $pathToFile1 = $this->getFixtureFullPath('file1.yaml');
         $pathToFile2 = $this->getFixtureFullPath('file2.yml');
         $pathToFile3 = $this->getFixtureFullPath('yamlres.txt');
-        $diffStringFromFiles = filesDiff($pathToFile1, $pathToFile2);
+        $diffStringFromFiles = genDiff($pathToFile1, $pathToFile2);
         $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
     }
 }
