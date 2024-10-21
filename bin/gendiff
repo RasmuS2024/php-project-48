@@ -23,11 +23,11 @@ Usage:
 Options:
   -h --help              Show this screen.
   -v --version           Show version.
-  --format <fmt>         Report format [default: json]
+  --format <fmt>         Report format [default: stylish]
 DOC;
 
-$args = Docopt::handle($doc, array('version'=>'Generate diff version 0.1 (12.10.2024)'))->args;
+$args = Docopt::handle($doc, array('version'=>'Generate diff version 0.2 (21.10.2024)'))->args;
 if (array_key_exists("<firstFile>", $args) & array_key_exists('<secondFile>', $args)) {
-    $result = genDiff($args['<firstFile>'], $args['<secondFile>']);
+    $result = genDiff($args['<firstFile>'], $args['<secondFile>'], $args['--format']);
     print_r($result);
 }

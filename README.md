@@ -11,3 +11,6 @@
 
 ## Gendiff process with YAML files in asciinema:
 <a href="https://asciinema.org/a/rV1BXXmxURj3LKG9UDLQcDJvi" target="_blank"><img src="https://asciinema.org/a/rV1BXXmxURj3LKG9UDLQcDJvi.svg" width="400" height="300" /></a>
+
+## Gendiff process with json and YAML files with nested structure in asciinema:
+<a href="https://asciinema.org/a/nUzyU01TNMRxl5NX8fDdVE54V" target="_blank"><img src="https://asciinema.org/a/nUzyU01TNMRxl5NX8fDdVE54V.svg" width="400" height="300" /></a>

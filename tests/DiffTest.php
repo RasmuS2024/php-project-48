@@ -43,4 +43,13 @@ class DiffTest extends TestCase
         $diffStringFromFiles = genDiff($pathToFile1, $pathToFile2);
         $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
     }
+
+    public function testFilesDiffYaml2(): void
+    {
+        $pathToFile1 = $this->getFixtureFullPath('2/file1.yaml');
+        $pathToFile2 = $this->getFixtureFullPath('2/file2.yml');
+        $pathToFile3 = $this->getFixtureFullPath('2/result.txt');
+        $diffStringFromFiles = genDiff($pathToFile1, $pathToFile2);
+        $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
+    }
 }
