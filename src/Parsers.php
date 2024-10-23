@@ -4,6 +4,8 @@ namespace GenDiff\Parsers;
 
 use Symfony\Component\Yaml\Yaml;
 
+use function GenDiff\Formatters\formatSelect;
+
 function getSortedKeys(array $json1, array $json2): array
 {
     $keys1 = array_keys($json1);
@@ -29,17 +31,12 @@ function genDiff(mixed $file1Path, mixed $file2Path, string $style = 'stylish'):
 {
     $data1 = fileReader($file1Path);
     $data2 = fileReader($file2Path);
-    $tt = filesDiffer($data1, $data2);
-    $st = '';
-    if ($style === 'stylish') {
-        $st = stylish($tt);
-    }
-    //print_r($st);
-    return $st;
-    //json_encode(filesDiffer($data1, $data2));
+    $dataDiff = filesDiffer($data1, $data2);
+    $result = formatSelect($dataDiff, $style);
+    return $result;
 }
 
-function arrayKeysInsert(array $array)
+function arrayKeysInsert(array $array): array
 {
     $value1 = array_map(function ($keyIn, $valueIn) {
         if (!is_array($valueIn)) {
@@ -88,71 +85,4 @@ function filesDiffer(mixed $data1, mixed $data2): mixed
         }
     }, $sortedKeys);
      return $data;
-}
-
-function array_flatten($tree, $depth = 0)
-{
-    $result = [];
-    foreach ($tree as $key => $value) {
-        if ($depth >= 0 && is_array($value)) {
-            $value = array_flatten($value, $depth > 1 ? $depth - 1 : 0 - $depth);
-            $result = array_merge($result, $value);
-        } else {
-            $result[] = $value;
-        }
-    }
-    return $result;
-}
-
-function iter(mixed $key1, $value1, $level = 1)
-{
-    $output = array_map(function ($key, $value) use ($level) {
-        if (is_array($value) && array_key_exists('value', $value)) {
-            if (is_array($value['value'])) {
-                $spaces = getLevelSpaces($level);
-                $type = $value['type'];
-                $tkey = $value['key'];
-                $level++;
-                $temp = iter($tkey, $value['value'], $level);
-                $temp = array_flatten($temp);
-                $temp = implode('', $temp);
-                if ($type === "_") {
-                    $newVal = $value['new_value'];
-                    $newVal = (is_string($newVal)) ? $newVal : json_encode($newVal);
-                    return "{$spaces}- {$tkey}: {\n{$temp}{$spaces}  }\n{$spaces}+ {$tkey}: {$newVal}\n";
-                } else {
-                    return "{$spaces}{$type} {$tkey}: {\n{$temp}{$spaces}  }\n";
-                }
-            } else {
-                $spaces = getLevelSpaces($level);
-                $type = $value['type'];
-                $tkey = $value['key'];
-                $val = $value['value'];
-                $val = (is_string($val)) ? "$val" : json_encode($val);
-                $val = ($val === '') ? '' : " {$val}";
-                if ($type === "_") {
-                    $newVal = $value['new_value'];
-                    $newVal = (is_string($newVal)) ? $newVal : json_encode($newVal);
-                    $newVal = ($newVal === '') ? '' : " {$newVal}";
-                    return "{$spaces}- {$tkey}:{$val}\n{$spaces}+ {$tkey}:{$newVal}\n";
-                } else {
-                    return "{$spaces}{$type} {$tkey}:{$val}\n";
-                }
-            }
-        }
-    }, array_keys($value1), $value1);
-    return $output;
-}
-
-function getLevelSpaces(int $level)
-{
-    return str_repeat(' ', $level * 4 - 2);
-}
-
-function stylish(array $tree)
-{
-    $result[] = "{\n";
-    $result[] = iter('', $tree, 1);
-    $result[] = "}";
-    return implode('', array_flatten($result));
 }

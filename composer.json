@@ -8,7 +8,10 @@
             "Hexlet\\Code\\": "src/"
         },
         "files": [
-            "src/Parsers.php"
+            "src/Parsers.php",
+            "src/Formatters.php",
+            "formatters/Stylish.php",
+            "formatters/Plain.php"
         ]
     },
     

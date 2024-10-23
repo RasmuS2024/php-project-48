@@ -52,4 +52,13 @@ class DiffTest extends TestCase
         $diffStringFromFiles = genDiff($pathToFile1, $pathToFile2);
         $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
     }
+
+    public function testFilesDiffJsonToPlainFormat(): void
+    {
+        $pathToFile1 = $this->getFixtureFullPath('2/file1.json');
+        $pathToFile2 = $this->getFixtureFullPath('2/file2.json');
+        $pathToFile3 = $this->getFixtureFullPath('2/Plainresult.txt');
+        $diffStringFromFiles = genDiff($pathToFile1, $pathToFile2, 'plain');
+        $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
+    }
 }
