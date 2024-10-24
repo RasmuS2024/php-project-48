@@ -1,0 +1,152 @@
+[
+    {
+        "type": " ",
+        "key": "common",
+        "value": [
+            {
+                "type": "+",
+                "key": "follow",
+                "value": false
+            },
+            {
+                "type": " ",
+                "key": "setting1",
+                "value": "Value 1"
+            },
+            {
+                "type": "-",
+                "key": "setting2",
+                "value": 200
+            },
+            {
+                "type": "_",
+                "key": "setting3",
+                "value": true,
+                "new_value": null
+            },
+            {
+                "type": "+",
+                "key": "setting4",
+                "value": "blah blah"
+            },
+            {
+                "type": "+",
+                "key": "setting5",
+                "value": [
+                    {
+                        "type": " ",
+                        "key": "key5",
+                        "value": "value5"
+                    }
+                ]
+            },
+            {
+                "type": " ",
+                "key": "setting6",
+                "value": [
+                    {
+                        "type": " ",
+                        "key": "doge",
+                        "value": [
+                            {
+                                "type": "_",
+                                "key": "wow",
+                                "value": "",
+                                "new_value": "so much"
+                            }
+                        ]
+                    },
+                    {
+                        "type": " ",
+                        "key": "key",
+                        "value": "value"
+                    },
+                    {
+                        "type": "+",
+                        "key": "ops",
+                        "value": "vops"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "type": " ",
+        "key": "group1",
+        "value": [
+            {
+                "type": "_",
+                "key": "baz",
+                "value": "bas",
+                "new_value": "bars"
+            },
+            {
+                "type": " ",
+                "key": "foo",
+                "value": "bar"
+            },
+            {
+                "type": "_",
+                "key": "nest",
+                "value": [
+                    {
+                        "type": " ",
+                        "key": "key",
+                        "value": "value"
+                    }
+                ],
+                "new_value": "str"
+            }
+        ]
+    },
+    {
+        "type": "-",
+        "key": "group2",
+        "value": [
+            {
+                "type": " ",
+                "key": "abc",
+                "value": 12345
+            },
+            {
+                "type": " ",
+                "key": "deep",
+                "value": [
+                    {
+                        "type": " ",
+                        "key": "id",
+                        "value": 45
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "type": "+",
+        "key": "group3",
+        "value": [
+            {
+                "type": " ",
+                "key": "deep",
+                "value": [
+                    {
+                        "type": " ",
+                        "key": "id",
+                        "value": [
+                            {
+                                "type": " ",
+                                "key": "number",
+                                "value": 45
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": " ",
+                "key": "fee",
+                "value": 100500
+            }
+        ]
+    }
+]

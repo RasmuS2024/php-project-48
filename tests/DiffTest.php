@@ -19,46 +19,37 @@ class DiffTest extends TestCase
 
     public function testFilesDiffJson(): void
     {
-        $pathToFile1 = $this->getFixtureFullPath('file1.json');
-        $pathToFile2 = $this->getFixtureFullPath('file2.json');
-        $pathToFile3 = $this->getFixtureFullPath('file3.txt');
-        $diffStringFromFiles = genDiff($pathToFile1, $pathToFile2);
-        $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
-    }
-
-    public function testFilesDiffJson2(): void
-    {
-        $pathToFile1 = $this->getFixtureFullPath('2/file1.json');
-        $pathToFile2 = $this->getFixtureFullPath('2/file2.json');
-        $pathToFile3 = $this->getFixtureFullPath('2/result.txt');
+        $pathToFile1 = $this->getFixtureFullPath('File1.json');
+        $pathToFile2 = $this->getFixtureFullPath('File2.json');
+        $pathToFile3 = $this->getFixtureFullPath('Result.txt');
         $diffStringFromFiles = genDiff($pathToFile1, $pathToFile2);
         $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
     }
 
     public function testFilesDiffYaml(): void
     {
-        $pathToFile1 = $this->getFixtureFullPath('file1.yaml');
-        $pathToFile2 = $this->getFixtureFullPath('file2.yml');
-        $pathToFile3 = $this->getFixtureFullPath('yamlres.txt');
-        $diffStringFromFiles = genDiff($pathToFile1, $pathToFile2);
-        $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
-    }
-
-    public function testFilesDiffYaml2(): void
-    {
-        $pathToFile1 = $this->getFixtureFullPath('2/file1.yaml');
-        $pathToFile2 = $this->getFixtureFullPath('2/file2.yml');
-        $pathToFile3 = $this->getFixtureFullPath('2/result.txt');
+        $pathToFile1 = $this->getFixtureFullPath('File1.yaml');
+        $pathToFile2 = $this->getFixtureFullPath('File2.yml');
+        $pathToFile3 = $this->getFixtureFullPath('Result.txt');
         $diffStringFromFiles = genDiff($pathToFile1, $pathToFile2);
         $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
     }
 
     public function testFilesDiffJsonToPlainFormat(): void
     {
-        $pathToFile1 = $this->getFixtureFullPath('2/file1.json');
-        $pathToFile2 = $this->getFixtureFullPath('2/file2.json');
-        $pathToFile3 = $this->getFixtureFullPath('2/Plainresult.txt');
+        $pathToFile1 = $this->getFixtureFullPath('File1.json');
+        $pathToFile2 = $this->getFixtureFullPath('File2.json');
+        $pathToFile3 = $this->getFixtureFullPath('Plainresult.txt');
         $diffStringFromFiles = genDiff($pathToFile1, $pathToFile2, 'plain');
+        $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
+    }
+
+    public function testFilesDiffJsonToJsonFormat(): void
+    {
+        $pathToFile1 = $this->getFixtureFullPath('File1.json');
+        $pathToFile2 = $this->getFixtureFullPath('File2.json');
+        $pathToFile3 = $this->getFixtureFullPath('Jsonresult.txt');
+        $diffStringFromFiles = genDiff($pathToFile1, $pathToFile2, 'json');
         $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
     }
 }

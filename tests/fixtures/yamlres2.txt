@@ -1,9 +1,0 @@
-{
-    defintions: определение 1
-  - instructions: описание практического задания
-  + instructions: ybrfrjuj jgbcfybz ytn!!!
-    name: brfrjuj
-    theory: Здесь текст урока
-  - tip: cсылка 1
-  + tips: cсылка 1
-}
