@@ -46,11 +46,11 @@ function iter(mixed$value1, $level = 1,  $key1 = null): array
                 $tkey = $value['key'];
                 $val = $value['value'];
                 $val = (is_string($val)) ? "$val" : json_encode($val);
-                $val = ($val === '') ? '' : " {$val}";
+                $val = ($val === '') ? ' ' : " {$val}";
                 if ($type === "_") {
                     $newVal = $value['new_value'];
                     $newVal = (is_string($newVal)) ? $newVal : json_encode($newVal);
-                    $newVal = ($newVal === '') ? '' : " {$newVal}";
+                    $newVal = ($newVal === '') ? ' ' : " {$newVal}";
                     return "{$spaces}- {$tkey}:{$val}\n{$spaces}+ {$tkey}:{$newVal}\n";
                 } else {
                     return "{$spaces}{$type} {$tkey}:{$val}\n";
