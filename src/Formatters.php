@@ -1,10 +1,10 @@
 <?php
 
-namespace GenDiff\Formatters;
+namespace Differ\Formatters;
 
-use function GenDiff\Formatters\Stylish\stylish;
-use function GenDiff\Formatters\Plain\plain;
-use function GenDiff\Formatters\Json\json;
+use function Differ\Formatters\Stylish\stylish;
+use function Differ\Formatters\Plain\plain;
+use function Differ\Formatters\Json\json;
 
 function formatSelect(array $diffSource, string $formatName): string
 {

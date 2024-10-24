@@ -1,8 +1,8 @@
 <?php
 
-namespace GenDiff\Formatters\Plain;
+namespace Differ\Formatters\Plain;
 
-use function GenDiff\Formatters\Stylish\array_flatten;
+use function Differ\Formatters\Stylish\array_flatten;
 
 function iter($value1, $level = '', $key1 = null): array
 {
