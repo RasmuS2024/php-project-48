@@ -21,7 +21,7 @@ function array_flatten($tree, $depth = 0)
     return $result;
 }
 
-function iter(mixed$value1, $level = 1,  $key1 = null): array
+function iter(mixed $value1, int $level = 1, $key1 = null): array
 {
     $output = array_map(function ($key, $value) use ($level) {
         if (is_array($value) && array_key_exists('value', $value)) {

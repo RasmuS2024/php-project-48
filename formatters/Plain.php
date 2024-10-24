@@ -20,7 +20,7 @@ function iter($value1, $level = '', $key1 = null): array
                     $newVal = (is_string($newVal)) ? "'{$newVal}'" : json_encode($newVal);
                 }
                 $result = match ($type) {
-                	' ' => '',
+                    ' ' => '',
                     '+' => "Property '{$level}' was added with value: [complex value]\n",
                     '-' => "Property '{$level}' was removed\n",
                     '_' => "Property '{$level}' was updated. From [complex value] to {$newVal}\n",
@@ -36,7 +36,7 @@ function iter($value1, $level = '', $key1 = null): array
                     $newVal = (is_string($newVal)) ? "'{$newVal}'" : json_encode($newVal);
                 }
                 $result = match ($type) {
-                	' ' => '',
+                    ' ' => '',
                     '+' => "Property '{$level}.{$tkey}' was added with value: {$val}\n",
                     '-' => "Property '{$level}.{$tkey}' was removed\n",
                     '_' => "Property '{$level}.{$tkey}' was updated. From {$val} to {$newVal}\n",
@@ -54,4 +54,3 @@ function plain(array $tree): string
     $result = implode('', array_flatten($result));
     return substr($result, 0, -1);
 }
-
