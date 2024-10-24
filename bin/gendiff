@@ -10,7 +10,7 @@ if (file_exists($autoloadPath1)) {
     require_once $autoloadPath2;
 }
 
-use function GenDiff\Parsers\genDiff;
+use function GenDiff\Differ\genDiff;
 
 $doc = <<<DOC
 Generate diff

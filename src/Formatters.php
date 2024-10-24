@@ -5,9 +5,9 @@ namespace GenDiff\Formatters;
 use function GenDiff\Formatters\Stylish\stylish;
 use function GenDiff\Formatters\Plain\plain;
 
-function formatSelect(array $diffSource, string $style): string
+function formatSelect(array $diffSource, string $formatName): string
 {
-    $result = match ($style) {
+    $result = match ($formatName) {
         'stylish' => stylish($diffSource),
         'plain' => plain($diffSource),
     };
