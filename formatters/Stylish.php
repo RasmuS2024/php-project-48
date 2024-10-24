@@ -7,7 +7,7 @@ function getLevelSpaces(int $level)
     return str_repeat(' ', $level * 4 - 2);
 }
 
-function array_flatten($tree, $depth = 0)
+function array_flatten(array $tree, int $depth = 0)
 {
     $result = [];
     foreach ($tree as $key => $value) {

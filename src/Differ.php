@@ -9,8 +9,11 @@ function genDiff(mixed $file1Path, mixed $file2Path, string $formatName = 'styli
 {
     $data1 = fileParser($file1Path);
     $data2 = fileParser($file2Path);
-    $dataDiff = filesDiffer($data1, $data2);
-    $result = formatSelect($dataDiff, $formatName);
+    $result = '';
+    if ($data1 && $data2) {
+        $dataDiff = filesDiffer($data1, $data2);
+        $result = formatSelect($dataDiff, $formatName);
+    }
     return $result;
 }
 

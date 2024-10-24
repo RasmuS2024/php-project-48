@@ -9,6 +9,7 @@ validate:
 
 lint:
 	composer exec --verbose phpcs -- --standard=PSR12 src bin tests formatters
+	composer exec -v phpstan analyse -- -c phpstan.neon --ansi
 
 test:
 	composer exec --verbose phpunit tests
