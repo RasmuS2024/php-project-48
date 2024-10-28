@@ -1,4 +1,5 @@
 /vendor/
-/build/
+build/
+build/logs/
 /.phpunit.cache/
 /.idea/
