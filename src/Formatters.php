@@ -12,6 +12,7 @@ function formatSelect(array $diffSource, string $formatName): string
         'stylish' => stylish($diffSource),
         'plain' => plain($diffSource),
         'json' => json($diffSource),
+        default => '',
     };
     return $result;
 }

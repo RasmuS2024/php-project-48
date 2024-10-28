@@ -1,7 +1,9 @@
 parameters:
   level: 8
   paths:
-    - code
+    - src
+    - formatters
+    - bin
 
   checkMissingIterableValueType: false
 
@@ -18,5 +20,5 @@ parameters:
    - '#should return .* but returns#'
    - '#Anonymous function should have native return type#'
 
-  #phpstanFunctionalProgramming:
-  #  disallowThrow: false
+#phpstanFunctionalProgramming:
+#  disallowThrow: false

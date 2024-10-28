@@ -2,55 +2,41 @@
 
 namespace Differ\Formatters\Stylish;
 
+use function Functional\flatten;
+
 function getLevelSpaces(int $level)
 {
     return str_repeat(' ', $level * 4 - 2);
 }
 
-function array_flatten(array $tree, int $depth = 0)
-{
-    $result = [];
-    foreach ($tree as $key => $value) {
-        if ($depth >= 0 && is_array($value)) {
-            $value = array_flatten($value, $depth > 1 ? $depth - 1 : 0 - $depth);
-            $result = array_merge($result, $value);
-        } else {
-            $result[] = $value;
-        }
-    }
-    return $result;
-}
-
-function iter(mixed $value1, int $level = 1, $key1 = null): array
+function iter(mixed $value1, int $level = 1): array
 {
     $output = array_map(function ($key, $value) use ($level) {
+        $spaces = getLevelSpaces($level);
         if (is_array($value) && array_key_exists('value', $value)) {
             if (is_array($value['value'])) {
-                $spaces = getLevelSpaces($level);
-                $type = $value['type'];
                 $tkey = $value['key'];
-                $level++;
-                $temp = iter($value['value'], $level, $tkey);
-                $temp = array_flatten($temp);
-                $temp = implode('', $temp);
+                $type = $value['type'];
+                $levelNew = $level + 1;
+                $temp = iter($value['value'], $levelNew);
+                $tempFlatten = flatten($temp);
+                $tempImplode = implode('', $tempFlatten);
                 if ($type === "_") {
-                    $newVal = $value['new_value'];
-                    $newVal = (is_string($newVal)) ? $newVal : json_encode($newVal);
-                    return "{$spaces}- {$tkey}: {\n{$temp}{$spaces}  }\n{$spaces}+ {$tkey}: {$newVal}\n";
+                    $newValue = $value['new_value'];
+                    $newVal = (is_string($newValue)) ? $newValue : json_encode($newValue);
+                    return "{$spaces}- {$tkey}: {\n{$tempImplode}{$spaces}  }\n{$spaces}+ {$tkey}: {$newVal}\n";
                 } else {
-                    return "{$spaces}{$type} {$tkey}: {\n{$temp}{$spaces}  }\n";
+                    return "{$spaces}{$type} {$tkey}: {\n{$tempImplode}{$spaces}  }\n";
                 }
             } else {
-                $spaces = getLevelSpaces($level);
                 $type = $value['type'];
                 $tkey = $value['key'];
-                $val = $value['value'];
-                $val = (is_string($val)) ? "$val" : json_encode($val);
-                $val = ($val === '') ? ' ' : " {$val}";
+                $tempValue = (is_string($value['value'])) ? $value['value'] : json_encode($value['value']);
+                $val = ($tempValue === '') ? ' ' : " {$tempValue}";
                 if ($type === "_") {
-                    $newVal = $value['new_value'];
-                    $newVal = (is_string($newVal)) ? $newVal : json_encode($newVal);
-                    $newVal = ($newVal === '') ? ' ' : " {$newVal}";
+                    $newValue = $value['new_value'];
+                    $tempNewValue = (is_string($newValue)) ? $newValue : json_encode($newValue);
+                    $newVal = ($tempNewValue === '') ? ' ' : " {$tempNewValue}";
                     return "{$spaces}- {$tkey}:{$val}\n{$spaces}+ {$tkey}:{$newVal}\n";
                 } else {
                     return "{$spaces}{$type} {$tkey}:{$val}\n";
@@ -61,10 +47,10 @@ function iter(mixed $value1, int $level = 1, $key1 = null): array
     return $output;
 }
 
-function stylish(array $tree)
+function stylish(array $tree): string
 {
-    $result[] = "{\n";
-    $result[] = iter($tree, 1);
-    $result[] = "}";
-    return implode('', array_flatten($result));
+    $temp1 = iter($tree, 1);
+    $temp2 = flatten($temp1);
+    $result = implode($temp2);
+    return "{\n{$result}}";
 }

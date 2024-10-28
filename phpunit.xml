@@ -4,12 +4,13 @@
          bootstrap="vendor/autoload.php"
          cacheResultFile=".phpunit.cache/test-results"
          executionOrder="depends,defects"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
          beStrictAboutTestsThatDoNotTestAnything="false"
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTodoAnnotatedTests="true"
          beStrictAboutCoverageMetadata="true"
-         failOnRisky="false"
-         failOnWarning="false">
+         failOnRisky="true"
+         failOnWarning="true">
     <testsuites>
         <testsuite name="default">
             <directory>tests</directory>

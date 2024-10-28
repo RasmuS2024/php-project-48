@@ -1,5 +1,5 @@
 {
-    "name": "hexlet/code",
+    "name": "Rasmus2024/php-project-48",
     "description": "My 2 project on Hexlet - Gendiff",
     "type": "project",
     "license": "MIT",
@@ -25,7 +25,8 @@
     ],
     "require": {
         "docopt/docopt": "^1.0",
-        "symfony/yaml": "^6.0"
+        "symfony/yaml": "^6.0",
+        "lstrojny/functional-php": "^1.17"
     },
         "bin": [
         "bin/gendiff"
@@ -36,7 +37,8 @@
         "phpstan/phpstan": "1.10.24",
         "phpstan/extension-installer": "1.4.3",
         "phpstan/phpstan-beberlei-assert": "^1.1",
-        "phpstan/phpstan-strict-rules": "^1.5"
+        "phpstan/phpstan-strict-rules": "^1.5",
+        "hexlet/phpstan-fp": "^2.0"
     },
     "config": {
         "allow-plugins": {

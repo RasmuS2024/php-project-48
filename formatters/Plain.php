@@ -2,7 +2,7 @@
 
 namespace Differ\Formatters\Plain;
 
-use function Differ\Formatters\Stylish\array_flatten;
+use function Functional\flatten;
 
 function iter(mixed $value1, string $level = '', mixed $key1 = null): array
 {
@@ -12,42 +12,48 @@ function iter(mixed $value1, string $level = '', mixed $key1 = null): array
                 $type = $value['type'];
                 $tkey = $value['key'];
                 if ($level === '') {
-                    $level = $tkey;
+                    $newLevel = $tkey;
                 } else {
-                    $level = "{$level}.{$tkey}";
+                    $newLevel = "{$level}.{$tkey}";
                 }
-                $arrayResult = iter($value['value'], $level, $tkey);
-                $arrayResult2 = array_flatten($arrayResult);
+                $arrayResult = iter($value['value'], $newLevel, $tkey);
+                $arrayResult2 = flatten($arrayResult);
                 $arrayResult3 = implode('', $arrayResult2);
                 if (array_key_exists('new_value', $value)) {
-                    $newVal = $value['new_value'];
-                    if (is_string($newVal)) {
-                        $newVal = "'{$newVal}'";
+                    if (is_string($value['new_value'])) {
+                        $newVal = "'{$value['new_value']}'";
                     } else {
-                        $newVal = json_encode($newVal);
+                        $newVal = json_encode($value['new_value']);
+                    }
+                    if ($type === '_') {
+                        $temp = "Property '{$newLevel}' was updated. From [complex value] to {$newVal}\n";
+                        return "{$temp}{$arrayResult3}";
                     }
                 }
                 $result = match ($type) {
                     ' ' => '',
-                    '+' => "Property '{$level}' was added with value: [complex value]\n",
-                    '-' => "Property '{$level}' was removed\n",
-                    '_' => "Property '{$level}' was updated. From [complex value] to {$newVal}\n",
+                    '+' => "Property '{$newLevel}' was added with value: [complex value]\n",
+                    '-' => "Property '{$newLevel}' was removed\n",
+                    default => '',
                 };
                 return "{$result}{$arrayResult3}";
             } else {
                 $type = $value['type'];
                 $tkey = $value['key'];
-                $val = $value['value'];
-                $val = (is_string($val)) ? "'{$val}'" : json_encode($val);
+                $val = (is_string($value['value'])) ? "'{$value['value']}'" : json_encode($value['value']);
                 if (array_key_exists('new_value', $value)) {
-                    $newVal = $value['new_value'];
-                    $newVal = (is_string($newVal)) ? "'{$newVal}'" : json_encode($newVal);
+                    $newVal = (is_string($value['new_value'])) ?
+                    "'{$value['new_value']}'" :
+                    json_encode($value['new_value']);
+                    if ($type === '_') {
+                        return "Property '{$level}.{$tkey}' was updated. From {$val} to {$newVal}\n";
+                    }
                 }
                 $result = match ($type) {
                     ' ' => '',
                     '+' => "Property '{$level}.{$tkey}' was added with value: {$val}\n",
                     '-' => "Property '{$level}.{$tkey}' was removed\n",
-                    '_' => "Property '{$level}.{$tkey}' was updated. From {$val} to {$newVal}\n",
+                    default => '',
                 };
             }
             return $result;
@@ -58,7 +64,7 @@ function iter(mixed $value1, string $level = '', mixed $key1 = null): array
 
 function plain(array $tree): string
 {
-    $result = iter($tree, '');
-    $result = implode('', array_flatten($result));
+    $temp = iter($tree, '');
+    $result = implode('', flatten($temp));
     return substr($result, 0, -1);
 }
