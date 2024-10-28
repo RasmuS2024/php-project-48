@@ -1,5 +1,6 @@
 /vendor/
-build/
-build/logs/
+/build/
+/build/logs/
+/build/logs/clover.xml
 /.phpunit.cache/
 /.idea/
