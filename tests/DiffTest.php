@@ -35,6 +35,15 @@ class DiffTest extends TestCase
         $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
     }
 
+    public function testFilesDiffYamlWithJson(): void
+    {
+        $pathToFile1 = $this->getFixtureFullPath('File1.yaml');
+        $pathToFile2 = $this->getFixtureFullPath('File2.json');
+        $pathToFile3 = $this->getFixtureFullPath('Result.txt');
+        $diffStringFromFiles = genDiff($pathToFile1, $pathToFile2);
+        $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
+    }
+
     public function testFilesDiffJsonToPlainFormat(): void
     {
         $pathToFile1 = $this->getFixtureFullPath('File1.json');
@@ -50,6 +59,15 @@ class DiffTest extends TestCase
         $pathToFile2 = $this->getFixtureFullPath('File2.json');
         $pathToFile3 = $this->getFixtureFullPath('Jsonresult.txt');
         $diffStringFromFiles = genDiff($pathToFile1, $pathToFile2, 'json');
+        $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
+    }
+
+    public function testFilesNotFound(): void
+    {
+        $pathToFile1 = $this->getFixtureFullPath('File.json');
+        $pathToFile2 = $this->getFixtureFullPath('File5.json');
+        $pathToFile3 = $this->getFixtureFullPath('ParseError.txt');
+        $diffStringFromFiles = genDiff($pathToFile1, $pathToFile2);
         $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
     }
 }

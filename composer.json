@@ -1,22 +1,18 @@
 {
     "name": "hexlet/code",
     "description": "My 2 project on Hexlet - Gendiff",
-    "type": "project",
+    "type": "library",
     "license": "MIT",
     "autoload": {
-        "psr-4": {
-            "Hexlet\\Code\\": "src/"
-        },
         "files": [
             "src/Differ.php",
             "src/Parsers.php",
             "src/Formatters.php",
-            "formatters/Stylish.php",
-            "formatters/Plain.php",
-            "formatters/Json.php"
+            "src/Formatters/Stylish.php",
+            "src/Formatters/Plain.php",
+            "src/Formatters/Json.php"
         ]
     },
-    
     "authors": [
         {
             "name": "RasmuS2024",
@@ -36,7 +32,6 @@
         "squizlabs/php_codesniffer": "^3.10",
         "phpstan/phpstan": "1.10.24",
         "phpstan/extension-installer": "1.4.3",
-        "phpstan/phpstan-beberlei-assert": "^1.1",
         "phpstan/phpstan-strict-rules": "^1.5",
         "hexlet/phpstan-fp": "^2.0"
     },

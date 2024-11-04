@@ -2,7 +2,6 @@ parameters:
   level: 8
   paths:
     - src
-    - formatters
     - bin
 
   checkMissingIterableValueType: false

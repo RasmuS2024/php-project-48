@@ -13,9 +13,8 @@ function genDiff(mixed $file1Path, mixed $file2Path, string $formatName = 'styli
     if ($data1 !== false && $data2 !== false) {
         $dataDiff = arraysDiffer($data1, $data2);
         return formatSelect($dataDiff, $formatName);
-    } else {
-        return '';
     }
+    return "Parsing of file(s) error!\n";
 }
 
 function getSortedKeys(array $json1, array $json2): array
