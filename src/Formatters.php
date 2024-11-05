@@ -16,3 +16,15 @@ function formatSelect(array $diffSource, string $formatName): string
     };
     return $result;
 }
+
+function getStringValue(mixed $value, string $format = ''): string
+{
+    if (is_string($value)) {
+        if ($format === 'plain') {
+            return "'{$value}'";
+        } else {
+            return $value;
+        }
+    }
+    return json_encode($value);
+}

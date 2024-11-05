@@ -3,6 +3,7 @@
 namespace Differ\Formatters\Plain;
 
 use function Functional\flatten;
+use function Differ\Formatters\getStringValue;
 
 function getLevel(string $level, string $key): string
 {
@@ -10,14 +11,6 @@ function getLevel(string $level, string $key): string
         return $key;
     }
     return "{$level}.{$key}";
-}
-
-function getStringValue(mixed $value): string
-{
-    if (is_string($value)) {
-        return "'{$value}'";
-    }
-    return json_encode($value);
 }
 
 function iter(mixed $value1, string $level = '', mixed $key1 = null): array
@@ -30,7 +23,7 @@ function iter(mixed $value1, string $level = '', mixed $key1 = null): array
                 $arrayResult2 = flatten($arrayResult);
                 $arrayResult3 = implode('', $arrayResult2);
                 if (array_key_exists('new_value', $value)) {
-                    $newVal = getStringValue($value['new_value']);
+                    $newVal = getStringValue($value['new_value'], 'plain');
                     if ($value['type'] === '_') {
                         $temp = "Property '{$newLevel}' was updated. From [complex value] to {$newVal}\n";
                         return "{$temp}{$arrayResult3}";
@@ -44,9 +37,9 @@ function iter(mixed $value1, string $level = '', mixed $key1 = null): array
                 };
                 return "{$result}{$arrayResult3}";
             } else {
-                $val = (is_string($value['value'])) ? "'{$value['value']}'" : json_encode($value['value']);
+                $val = getStringValue($value['value'], 'plain');
                 if (array_key_exists('new_value', $value)) {
-                    $newVal = getStringValue($value['new_value']);
+                    $newVal = getStringValue($value['new_value'], 'plain');
                     if ($value['type'] === '_') {
                         return "Property '{$level}.{$value['key']}' was updated. From {$val} to {$newVal}\n";
                     }

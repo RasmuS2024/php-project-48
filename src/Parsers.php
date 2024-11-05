@@ -21,7 +21,6 @@ function fileParser(string $pathToFile): mixed
             case 'yml':
                 return Yaml::parseFile($pathToFile);
             default:
-                return false;
         }
     }
     return false;

@@ -3,10 +3,23 @@
 namespace Differ\Formatters\Stylish;
 
 use function Functional\flatten;
+use function Differ\Formatters\getStringValue;
 
 function getLevelSpaces(int $level)
 {
     return str_repeat(' ', $level * 4 - 2);
+}
+
+function getIterResult(mixed $valueComplex, mixed $value, string $spaces): string
+{
+    $type = $valueComplex['type'];
+    $key = $valueComplex['key'];
+    if ($type === "_") {
+        $newValue = getStringValue($valueComplex['new_value']);
+        return "{$spaces}- {$key}: {$value}\n{$spaces}+ {$key}: {$newValue}\n";
+    } else {
+        return "{$spaces}{$type} {$key}: {$value}\n";
+    }
 }
 
 function iter(mixed $value1, int $level = 1): array
@@ -15,32 +28,15 @@ function iter(mixed $value1, int $level = 1): array
         $spaces = getLevelSpaces($level);
         if (is_array($value) && array_key_exists('value', $value)) {
             if (is_array($value['value'])) {
-                $tkey = $value['key'];
-                $type = $value['type'];
                 $levelNew = $level + 1;
                 $temp = iter($value['value'], $levelNew);
                 $tempFlatten = flatten($temp);
                 $tempImplode = implode('', $tempFlatten);
-                if ($type === "_") {
-                    $newValue = $value['new_value'];
-                    $newVal = (is_string($newValue)) ? $newValue : json_encode($newValue);
-                    return "{$spaces}- {$tkey}: {\n{$tempImplode}{$spaces}  }\n{$spaces}+ {$tkey}: {$newVal}\n";
-                } else {
-                    return "{$spaces}{$type} {$tkey}: {\n{$tempImplode}{$spaces}  }\n";
-                }
+                $val = "{\n{$tempImplode}{$spaces}  }";
+                return getIterResult($value, $val, $spaces);
             } else {
-                $type = $value['type'];
-                $tkey = $value['key'];
-                $tempValue = (is_string($value['value'])) ? $value['value'] : json_encode($value['value']);
-                $val = ($tempValue === '') ? ' ' : " {$tempValue}";
-                if ($type === "_") {
-                    $newValue = $value['new_value'];
-                    $tempNewValue = (is_string($newValue)) ? $newValue : json_encode($newValue);
-                    $newVal = ($tempNewValue === '') ? ' ' : " {$tempNewValue}";
-                    return "{$spaces}- {$tkey}:{$val}\n{$spaces}+ {$tkey}:{$newVal}\n";
-                } else {
-                    return "{$spaces}{$type} {$tkey}:{$val}\n";
-                }
+                $val = getStringValue($value['value']);
+                return getIterResult($value, $val, $spaces);
             }
         }
     }, array_keys($value1), $value1);

@@ -48,7 +48,7 @@ make install
 
 use function Differ\Differ\genDiff;
 
-$format = 'plain'; 				// supported formats: "stylish", "plain", "json", default: "stylish"
+$format = 'plain';				// supported formats: "stylish", "plain", "json", default: "stylish"
 $pathToFile1 = 'File1.json';	// paste your path to file in JSON or YAML format
 $pathToFile1 = 'File2.json';	// paste your path to file in JSON or YAML format
 $diff = genDiff($pathToFile1, $pathToFile2, $format);
