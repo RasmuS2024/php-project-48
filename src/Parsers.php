@@ -13,15 +13,16 @@ function fileParser(string $pathToFile): mixed
             case 'json':
                 $fileContent = file_get_contents($pathToFile);
                 if ($fileContent !== false) {
-                    return json_decode($fileContent, true);
+                    $result = json_decode($fileContent, true);
                 }
-                return false;
+                break;
             case 'yaml':
-                return Yaml::parseFile($pathToFile);
             case 'yml':
-                return Yaml::parseFile($pathToFile);
+                $result = Yaml::parseFile($pathToFile);
+                break;
             default:
+                break;
         }
     }
-    return false;
+    return $result ?? false;
 }

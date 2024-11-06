@@ -2,6 +2,7 @@
 
 namespace Differ\Formatters;
 
+use function Functional\flatten;
 use function Differ\Formatters\Stylish\stylish;
 use function Differ\Formatters\Plain\plain;
 use function Differ\Formatters\Json\json;
@@ -27,4 +28,10 @@ function getStringValue(mixed $value, string $format = ''): string
         }
     }
     return json_encode($value);
+}
+
+function getStringFromArray(array $array): string
+{
+    $tempFlatten = flatten($array);
+    return implode('', $tempFlatten);
 }

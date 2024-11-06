@@ -4,6 +4,7 @@ namespace Differ\Formatters\Plain;
 
 use function Functional\flatten;
 use function Differ\Formatters\getStringValue;
+use function Differ\Formatters\getStringFromArray;
 
 function getLevel(string $level, string $key): string
 {
@@ -13,6 +14,30 @@ function getLevel(string $level, string $key): string
     return "{$level}.{$key}";
 }
 
+function getIterResult(mixed $valueComplex, string $value, string $property, bool $isArray = false): string
+{
+    if ($isArray) {
+        $oldValue = '[complex value]';
+        $newProperty = $property;
+    } else {
+        $oldValue = $value;
+        $newProperty = "{$property}.{$valueComplex['key']}";
+    }
+    if (array_key_exists('new_value', $valueComplex)) {
+        $newVal = getStringValue($valueComplex['new_value'], 'plain');
+        if ($valueComplex['type'] === '_') {
+            return "Property '{$newProperty}' was updated. From {$oldValue} to {$newVal}\n";
+        }
+    }
+    $result = match ($valueComplex['type']) {
+        ' ' => '',
+        '+' => "Property '{$newProperty}' was added with value: {$oldValue}\n",
+        '-' => "Property '{$newProperty}' was removed\n",
+        default => '',
+    };
+    return $result;
+}
+
 function iter(mixed $value1, string $level = '', mixed $key1 = null): array
 {
     $output = array_map(function ($key, $value) use ($level) {
@@ -20,36 +45,13 @@ function iter(mixed $value1, string $level = '', mixed $key1 = null): array
             if (is_array($value['value'])) {
                 $newLevel = getLevel($level, $value['key']);
                 $arrayResult = iter($value['value'], $newLevel, $value['key']);
-                $arrayResult2 = flatten($arrayResult);
-                $arrayResult3 = implode('', $arrayResult2);
-                if (array_key_exists('new_value', $value)) {
-                    $newVal = getStringValue($value['new_value'], 'plain');
-                    if ($value['type'] === '_') {
-                        $temp = "Property '{$newLevel}' was updated. From [complex value] to {$newVal}\n";
-                        return "{$temp}{$arrayResult3}";
-                    }
-                }
-                $result = match ($value['type']) {
-                    ' ' => '',
-                    '+' => "Property '{$newLevel}' was added with value: [complex value]\n",
-                    '-' => "Property '{$newLevel}' was removed\n",
-                    default => '',
-                };
-                return "{$result}{$arrayResult3}";
+                //var_dump($arrayResult);
+                $stringResult = getStringFromArray($arrayResult);
+                $result = getIterResult($value, $stringResult, $newLevel, true);
+                return "{$result}{$stringResult}";
             } else {
-                $val = getStringValue($value['value'], 'plain');
-                if (array_key_exists('new_value', $value)) {
-                    $newVal = getStringValue($value['new_value'], 'plain');
-                    if ($value['type'] === '_') {
-                        return "Property '{$level}.{$value['key']}' was updated. From {$val} to {$newVal}\n";
-                    }
-                }
-                $result = match ($value['type']) {
-                    ' ' => '',
-                    '+' => "Property '{$level}.{$value['key']}' was added with value: {$val}\n",
-                    '-' => "Property '{$level}.{$value['key']}' was removed\n",
-                    default => '',
-                };
+                $stringResult = getStringValue($value['value'], 'plain');
+                $result = getIterResult($value, $stringResult, $level);
             }
             return $result;
         }
