@@ -45,6 +45,9 @@ make install
 ```
 <?php
 
+$autoloadPath = '/vendor/autoload.php'; //paste your path to file "autoload.php" in "vendor" dir.
+require_once $autoloadPath;
+
 use function Differ\Differ\genDiff;
 
 $format = 'plain';				// supported formats: "stylish", "plain", "json", default: "stylish"
