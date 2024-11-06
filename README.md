@@ -24,8 +24,8 @@ The keys are displayed in alphabetical order.
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/RasmuS2024/php-project-48/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/RasmuS2024/php-project-48/actions)
 ### Codeclimate maintainability and Test Coverage status:
-<a href="https://codeclimate.com/github/RasmuS2024/php-project-48/maintainability"><img src="https://api.codeclimate.com/v1/badges/dd978260caa754e3367b/maintainability" /></a>
-<a href="https://codeclimate.com/github/RasmuS2024/php-project-48/test_coverage"><img src="https://api.codeclimate.com/v1/badges/dd978260caa754e3367b/test_coverage" /></a>
+<a href="https://codeclimate.com/github/RasmuS2024/php-project-48/maintainability"><img src="https://api.codeclimate.com/v1/badges/22b3714a5d12eb28103f/maintainability" /></a>
+<a href="https://codeclimate.com/github/RasmuS2024/php-project-48/test_coverage"><img src="https://api.codeclimate.com/v1/badges/22b3714a5d12eb28103f/test_coverage" /></a>
 
 ## Prerequisites
 * Linux, WSL

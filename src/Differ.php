@@ -43,29 +43,6 @@ function getValue(mixed $inValue): mixed
     return $inValue;
 }
 
-function arraysDiffer2(mixed $data1, mixed $data2): mixed
-{
-    $sortedKeys = getSortedKeys($data1, $data2);
-    $data = array_map(function ($key) use ($data1, $data2) {
-        if (!array_key_exists($key, $data1)) {
-            return ['type' => '+', 'key' => $key, 'value' => getValue($data2[$key])];
-        } elseif (!array_key_exists($key, $data2)) {
-            return ['type' => '-', 'key' => $key, 'value' => getValue($data1[$key])];
-        }
-        if (is_array($data1[$key]) && is_array($data2[$key])) {
-            return ['type' => ' ', 'key' => $key, 'value' => arraysDiffer($data1[$key], $data2[$key])];
-        }
-        if ($data1[$key] === $data2[$key]) {
-            return ['type' => ' ', 'key' => $key, 'value' => $data1[$key]];
-        } else {
-            $value = getValue($data1[$key]);
-            $newValue = getValue($data2[$key]);
-            return ['type' => '_', 'key' => $key, 'value' => $value, 'new_value' => $newValue];
-        }
-    }, $sortedKeys);
-     return $data;
-}
-
 function arraysDiffer(mixed $data1, mixed $data2): mixed
 {
     $sortedKeys = getSortedKeys($data1, $data2);
