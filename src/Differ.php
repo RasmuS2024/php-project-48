@@ -9,7 +9,6 @@ use function Functional\sort;
 function genDiff(mixed $file1Path, mixed $file2Path, string $formatName = 'stylish'): string
 {
     $data1 = fileParser($file1Path);
-    //var_dump($data1);
     $data2 = fileParser($file2Path);
     if ($data1 !== false && $data2 !== false) {
         $dataDiff = arraysDiffer($data1, $data2);

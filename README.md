@@ -21,6 +21,8 @@ The keys are displayed in alphabetical order.
  	"\_" - если значение ключа изменилось, при этом новое значение ключа хранится в ключе "new_value".
 Ключи выводятся в алфавитном порядке.
 
+### Github Actions Status:
+[![](https://github.com/RasmuS2024/php-project-48/actions/workflows/testworkflow.yml/badge.svg)](https://github.com/RasmuS2024/php-project-48/actions)
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/RasmuS2024/php-project-48/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/RasmuS2024/php-project-48/actions)
 ### Codeclimate maintainability and Test Coverage status:
