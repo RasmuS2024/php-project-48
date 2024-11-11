@@ -2,19 +2,32 @@
 
 namespace Differ\Differ;
 
-use function Differ\Formatters\formatSelect;
-use function Differ\Parsers\fileParser;
+use function Differ\Formatters\getFormattedDiff;
+use function Differ\Parsers\parseDataWithFormat;
 use function Functional\sort;
+
+function getDataFromFile(string $pathToFile): mixed
+{
+    $fileContent = file_get_contents($pathToFile);
+    return $fileContent;
+}
+
+function getFileExtension(string $pathToFile): string
+{
+    return pathinfo($pathToFile)['extension'] ?? '';
+}
 
 function genDiff(mixed $file1Path, mixed $file2Path, string $formatName = 'stylish'): string
 {
-    $data1 = fileParser($file1Path);
-    $data2 = fileParser($file2Path);
-    if ($data1 !== false && $data2 !== false) {
-        $dataDiff = arraysDiffer($data1, $data2);
-        return formatSelect($dataDiff, $formatName);
+    $dataFromFile1 = getDataFromFile($file1Path);
+    $dataFromFile2 = getDataFromFile($file2Path);
+    if ($dataFromFile1 !== false && $dataFromFile2 !== false) {
+        $parsedData1 = parseDataWithFormat($dataFromFile1, getFileExtension($file1Path));
+        $parsedData2 = parseDataWithFormat($dataFromFile2, getFileExtension($file2Path));
+        $dataDiff = getArraysDiffer($parsedData1, $parsedData2);
+        return getFormattedDiff($dataDiff, $formatName);
     }
-    return "Parsing of file(s) error!\n";
+    return "Reading of file(s) error!\n";
 }
 
 function getSortedKeys(array $data1, array $data2): array
@@ -22,8 +35,8 @@ function getSortedKeys(array $data1, array $data2): array
     $keys1 = array_keys($data1);
     $keys2 = array_keys($data2);
     $unionKeys = array_merge($keys1, $keys2);
-    $keys = array_unique($unionKeys);
-    $keysSorted = sort($keys, fn ($left, $right) => $left <=> $right);
+    $uniqueKeys = array_unique($unionKeys);
+    $keysSorted = sort($uniqueKeys, fn ($left, $right) => $left <=> $right);
     return $keysSorted;
 }
 
@@ -42,7 +55,7 @@ function getValue(mixed $inValue): mixed
     return $inValue;
 }
 
-function arraysDiffer(mixed $data1, mixed $data2): mixed
+function getArraysDiffer(mixed $data1, mixed $data2): mixed
 {
     $sortedKeys = getSortedKeys($data1, $data2);
     $result = array_map(function ($key) use ($data1, $data2) {
@@ -51,7 +64,7 @@ function arraysDiffer(mixed $data1, mixed $data2): mixed
         } elseif (!array_key_exists($key, $data2)) {
             return ['type' => '-', 'key' => $key, 'value' => getValue($data1[$key])];
         } elseif (is_array($data1[$key]) && is_array($data2[$key])) {
-            return ['type' => ' ', 'key' => $key, 'value' => arraysDiffer($data1[$key], $data2[$key])];
+            return ['type' => ' ', 'key' => $key, 'value' => getArraysDiffer($data1[$key], $data2[$key])];
         } elseif ($data1[$key] === $data2[$key]) {
             return ['type' => ' ', 'key' => $key, 'value' => $data1[$key]];
         } else {

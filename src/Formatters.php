@@ -3,29 +3,24 @@
 namespace Differ\Formatters;
 
 use function Functional\flatten;
-use function Differ\Formatters\Stylish\stylish;
-use function Differ\Formatters\Plain\plain;
-use function Differ\Formatters\Json\json;
+use function Differ\Formatters\Stylish\getStylishFormat;
+use function Differ\Formatters\Plain\getPlainFormat;
+use function Differ\Formatters\Json\getJsonFormat;
 
-function formatSelect(array $diffSource, string $formatName): string
+function getFormattedDiff(array $diffSource, string $formatName): string
 {
-    $result = match ($formatName) {
-        'stylish' => stylish($diffSource),
-        'plain' => plain($diffSource),
-        'json' => json($diffSource),
+    return match ($formatName) {
+        'stylish' => getStylishFormat($diffSource),
+        'plain' => getPlainFormat($diffSource),
+        'json' => getJsonFormat($diffSource),
         default => "Unknown format: \"{$formatName}\"",
     };
-    return $result;
 }
 
 function getStringValue(mixed $value, string $format = ''): string
 {
     if (is_string($value)) {
-        if ($format === 'plain') {
-            return "'{$value}'";
-        } else {
-            return $value;
-        }
+        return $format === 'plain' ? "'{$value}'" : $value;
     }
     return json_encode($value);
 }

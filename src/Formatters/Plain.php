@@ -59,7 +59,7 @@ function iter(mixed $value1, string $level = '', mixed $key1 = null): array
     return $output;
 }
 
-function plain(array $tree): string
+function getPlainFormat(array $tree): string
 {
     $temp = iter($tree, '');
     $result = implode('', flatten($temp));

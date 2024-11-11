@@ -43,7 +43,7 @@ function iter(mixed $value1, int $level = 1): array
     return $output;
 }
 
-function stylish(array $tree): string
+function getStylishFormat(array $tree): string
 {
     $temp = iter($tree, 1);
     $result = getStringFromArray($temp);
