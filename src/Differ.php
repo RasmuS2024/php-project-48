@@ -24,8 +24,10 @@ function genDiff(mixed $file1Path, mixed $file2Path, string $formatName = 'styli
     if ($dataFromFile1 !== false && $dataFromFile2 !== false) {
         $parsedData1 = parseDataWithFormat($dataFromFile1, getFileExtension($file1Path));
         $parsedData2 = parseDataWithFormat($dataFromFile2, getFileExtension($file2Path));
-        $dataDiff = getArraysDiffer($parsedData1, $parsedData2);
-        return getFormattedDiff($dataDiff, $formatName);
+        if ($parsedData1 !== false && $parsedData2 !== false) {
+            $dataDiff = getArraysDiffer($parsedData1, $parsedData2);
+            return getFormattedDiff($dataDiff, $formatName);
+        }
     }
     return "Reading of file(s) error!\n";
 }

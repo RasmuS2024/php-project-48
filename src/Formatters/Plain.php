@@ -45,7 +45,6 @@ function iter(mixed $value1, string $level = '', mixed $key1 = null): array
             if (is_array($value['value'])) {
                 $newLevel = getLevel($level, $value['key']);
                 $arrayResult = iter($value['value'], $newLevel, $value['key']);
-                //var_dump($arrayResult);
                 $stringResult = getStringFromArray($arrayResult);
                 $result = getIterResult($value, $stringResult, $newLevel, true);
                 return "{$result}{$stringResult}";

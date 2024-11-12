@@ -9,7 +9,7 @@ function parseDataWithFormat(string $data, string $format): mixed
     $result = match ($format) {
         'json' => json_decode($data, true),
         'yaml', 'yml' => Yaml::parse($data),
-        default => null,
+        default => false,
     };
     return $result ?? false;
 }
