@@ -1,1 +1,0 @@
-Error: File extension is not allowed! Allowed types: 'json', 'yaml', 'yml'.

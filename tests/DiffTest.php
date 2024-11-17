@@ -65,16 +65,23 @@ class DiffTest extends TestCase
 
     public function testFileNotAllowedExtension(): void
     {
+        $this->expectException(\RuntimeException::class);
         $pathToFile1 = $this->getFixtureFullPath('File1.jso');
         $pathToFile2 = $this->getFixtureFullPath('File2.json');
-        $pathToFile3 = $this->getFixtureFullPath('FileNotAllowedError.txt');
         $diffStringFromFiles = genDiff($pathToFile1, $pathToFile2);
-        $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
     }
 
-    public function testParseDataWithFormatFunction(): void
+    public function testFileNotFound(): void
     {
-        $result = parseDataWithFormat('{"key": "value"}', 'txt');
-        $this->assertEquals($result, ['success' => false]);
+        $this->expectException(\RuntimeException::class);
+        $pathToFile1 = $this->getFixtureFullPath('File1.json');
+        $pathToFile2 = $this->getFixtureFullPath('File5.json');
+        $diffStringFromFiles = genDiff($pathToFile1, $pathToFile2);
+    }
+
+    public function testParseDataWithFormatFunction()
+    {
+        $this->expectException(\RuntimeException::class);
+        $result = parseDataWithFormat(['data' => '{"key": "value"}', 'extension' => 'txt']);
     }
 }

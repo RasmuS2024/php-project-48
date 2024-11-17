@@ -13,6 +13,6 @@ function getFormattedDiff(array $diffSource, string $formatName): string
         'stylish' => getStylishFormat($diffSource),
         'plain' => getPlainFormat($diffSource),
         'json' => getJsonFormat($diffSource),
-        default => "Unknown format: \"{$formatName}\"",
+        default => throw new \RuntimeException("Unknown data format: \"{$formatName}\""),
     };
 }

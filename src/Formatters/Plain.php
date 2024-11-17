@@ -37,13 +37,13 @@ function getIterResult(mixed $valueComplex, string $value, string $property, boo
     return $result;
 }
 
-function iter(mixed $value1, string $level = '', mixed $key1 = null): array
+function iter(mixed $value1, string $level = ''): array
 {
     $output = array_map(function ($key, $value) use ($level) {
         if (is_array($value) && array_key_exists('value', $value)) {
             if (is_array($value['value'])) {
                 $newLevel = getLevel($level, $value['key']);
-                $arrayResult = iter($value['value'], $newLevel, $value['key']);
+                $arrayResult = iter($value['value'], $newLevel);
                 $stringResult = implode('', flatten($arrayResult));
                 $result = getIterResult($value, $stringResult, $newLevel, true);
                 return "{$result}{$stringResult}";
