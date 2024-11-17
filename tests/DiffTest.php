@@ -5,6 +5,7 @@ namespace GenDiff\Parsers;
 use PHPUnit\Framework\TestCase;
 
 use function Differ\Differ\genDiff;
+use function Differ\Parsers\parseDataWithFormat;
 
 class DiffTest extends TestCase
 {
@@ -60,5 +61,20 @@ class DiffTest extends TestCase
         $pathToFile3 = $this->getFixtureFullPath('Jsonresult.txt');
         $diffStringFromFiles = genDiff($pathToFile1, $pathToFile2, 'json');
         $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
+    }
+
+    public function testFileNotAllowedExtension(): void
+    {
+        $pathToFile1 = $this->getFixtureFullPath('File1.jso');
+        $pathToFile2 = $this->getFixtureFullPath('File2.json');
+        $pathToFile3 = $this->getFixtureFullPath('FileNotAllowedError.txt');
+        $diffStringFromFiles = genDiff($pathToFile1, $pathToFile2);
+        $this->assertStringEqualsFile($pathToFile3, $diffStringFromFiles);
+    }
+
+    public function testParseDataWithFormatFunction(): void
+    {
+        $result = parseDataWithFormat('{"key": "value"}', 'txt');
+        $this->assertEquals($result, ['success' => false]);
     }
 }

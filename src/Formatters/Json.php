@@ -4,6 +4,5 @@ namespace Differ\Formatters\Json;
 
 function getJsonFormat(array $tree): string
 {
-    $json_string = json_encode($tree);
-    return $json_string;
+    return json_encode($tree);
 }

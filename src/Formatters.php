@@ -16,17 +16,3 @@ function getFormattedDiff(array $diffSource, string $formatName): string
         default => "Unknown format: \"{$formatName}\"",
     };
 }
-
-function getStringValue(mixed $value, string $format = ''): string
-{
-    if (is_string($value)) {
-        return $format === 'plain' ? "'{$value}'" : $value;
-    }
-    return json_encode($value);
-}
-
-function getStringFromArray(array $array): string
-{
-    $tempFlatten = flatten($array);
-    return implode('', $tempFlatten);
-}

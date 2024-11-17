@@ -6,30 +6,54 @@ use function Differ\Formatters\getFormattedDiff;
 use function Differ\Parsers\parseDataWithFormat;
 use function Functional\sort;
 
-function getDataFromFile(string $pathToFile): mixed
+const ALLOWED_FILE_TYPES = ['json', 'yaml', 'yml'];
+
+function getDataFromFile(string $pathToFile): array
 {
-    $fileContent = file_get_contents($pathToFile);
-    return $fileContent;
+    if (!file_exists($pathToFile)) {
+        return ['success' => false, 'error' => "File '{$pathToFile}' not found."];
+    }
+    $fileExtension = array_key_exists('extension', pathinfo($pathToFile)) ? pathinfo($pathToFile)['extension'] : false;
+    if (!in_array($fileExtension, ALLOWED_FILE_TYPES, true)) {
+        $allowedFileTypesString = implode("', '", ALLOWED_FILE_TYPES);
+        return [
+            'success' => false,
+            'error' => "File extension is not allowed! Allowed types: '{$allowedFileTypesString}'."
+        ];
+    }
+    $fileContents = file_get_contents($pathToFile);
+    if ($fileContents === false) {
+        return ['success' => false, 'error' => "Unable to read file {$pathToFile}."];
+    }
+    return ['success' => true, 'extension' => $fileExtension, 'data' => $fileContents];
 }
 
-function getFileExtension(string $pathToFile): string
+function getParsedData(string $pathToFile): array
 {
-    return pathinfo($pathToFile)['extension'] ?? '';
+    $dataFromFile = getDataFromFile($pathToFile);
+    if ($dataFromFile['success']) {
+        $parsedData = parseDataWithFormat($dataFromFile['data'], $dataFromFile['extension']);
+        if (!$parsedData['success']) {
+            return ['success' => false, 'error' => "Unable to parse the file {$pathToFile}"];
+        }
+    } else {
+        return ['success' => false, 'error' => $dataFromFile['error']];
+    }
+    return ['success' => true, 'data' => $parsedData['data']];
 }
 
 function genDiff(mixed $file1Path, mixed $file2Path, string $formatName = 'stylish'): string
 {
-    $dataFromFile1 = getDataFromFile($file1Path);
-    $dataFromFile2 = getDataFromFile($file2Path);
-    if ($dataFromFile1 !== false && $dataFromFile2 !== false) {
-        $parsedData1 = parseDataWithFormat($dataFromFile1, getFileExtension($file1Path));
-        $parsedData2 = parseDataWithFormat($dataFromFile2, getFileExtension($file2Path));
-        if ($parsedData1 !== false && $parsedData2 !== false) {
-            $dataDiff = getArraysDiffer($parsedData1, $parsedData2);
-            return getFormattedDiff($dataDiff, $formatName);
-        }
+    $parsedData1 = getParsedData($file1Path);
+    if (!$parsedData1['success']) {
+        return "Error: {$parsedData1['error']}";
     }
-    return "Reading of file(s) error!\n";
+    $parsedData2 = getParsedData($file2Path);
+    if (!$parsedData2['success']) {
+        return "Error: {$parsedData2['error']}";
+    }
+    $dataDiff = getArraysDiffer($parsedData1['data'], $parsedData2['data']);
+    return getFormattedDiff($dataDiff, $formatName);
 }
 
 function getSortedKeys(array $data1, array $data2): array

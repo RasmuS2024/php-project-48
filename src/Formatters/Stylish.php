@@ -3,8 +3,6 @@
 namespace Differ\Formatters\Stylish;
 
 use function Functional\flatten;
-use function Differ\Formatters\getStringValue;
-use function Differ\Formatters\getStringFromArray;
 
 function getLevelSpaces(int $level)
 {
@@ -16,7 +14,8 @@ function getIterResult(mixed $valueComplex, mixed $value, string $spaces): strin
     $type = $valueComplex['type'];
     $key = $valueComplex['key'];
     if ($type === "_") {
-        $newValue = getStringValue($valueComplex['new_value']);
+        $tempValue = $valueComplex['new_value'];
+        $newValue = is_string($tempValue) ? $tempValue : json_encode($tempValue);
         return "{$spaces}- {$key}: {$value}\n{$spaces}+ {$key}: {$newValue}\n";
     } else {
         return "{$spaces}{$type} {$key}: {$value}\n";
@@ -31,11 +30,11 @@ function iter(mixed $value1, int $level = 1): array
             if (is_array($value['value'])) {
                 $levelNew = $level + 1;
                 $arrayResult = iter($value['value'], $levelNew);
-                $stringResult = getStringFromArray($arrayResult);
+                $stringResult = implode('', flatten($arrayResult));
                 $val = "{\n{$stringResult}{$spaces}  }";
                 return getIterResult($value, $val, $spaces);
             } else {
-                $val = getStringValue($value['value']);
+                $val = is_string($value['value']) ? $value['value'] : json_encode($value['value']);
                 return getIterResult($value, $val, $spaces);
             }
         }
@@ -46,6 +45,6 @@ function iter(mixed $value1, int $level = 1): array
 function getStylishFormat(array $tree): string
 {
     $temp = iter($tree, 1);
-    $result = getStringFromArray($temp);
+    $result = implode('', flatten($temp));
     return "{\n{$result}}";
 }
