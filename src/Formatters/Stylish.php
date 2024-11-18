@@ -17,20 +17,18 @@ function getIterResult(mixed $valueComplex, mixed $value, string $spaces): strin
         $tempValue = $valueComplex['new_value'];
         $newValue = is_string($tempValue) ? $tempValue : json_encode($tempValue);
         return "{$spaces}- {$key}: {$value}\n{$spaces}+ {$key}: {$newValue}\n";
-    } else {
-        $typeSymbol = match ($type) {
-            'added' => '+',
-            'deleted' => '-',
-            'notChanged' => ' ',
-            default => '',
-        };
-        return "{$spaces}{$typeSymbol} {$key}: {$value}\n";
     }
+    $typeSymbol = match ($type) {
+        'added' => '+',
+        'deleted' => '-',
+        default => ' ',
+    };
+    return "{$spaces}{$typeSymbol} {$key}: {$value}\n";
 }
 
 function iter(mixed $value1, int $level = 1): array
 {
-    $output = array_map(function ($key, $value) use ($level) {
+    return array_map(function ($key, $value) use ($level) {
         $spaces = getLevelSpaces($level);
         if (is_array($value) && array_key_exists('value', $value)) {
             if (is_array($value['value'])) {
@@ -39,13 +37,11 @@ function iter(mixed $value1, int $level = 1): array
                 $stringResult = implode('', flatten($arrayResult));
                 $val = "{\n{$stringResult}{$spaces}  }";
                 return getIterResult($value, $val, $spaces);
-            } else {
-                $val = is_string($value['value']) ? $value['value'] : json_encode($value['value']);
-                return getIterResult($value, $val, $spaces);
             }
+            $val = is_string($value['value']) ? $value['value'] : json_encode($value['value']);
+            return getIterResult($value, $val, $spaces);
         }
     }, array_keys($value1), $value1);
-    return $output;
 }
 
 function getStylishFormat(array $tree): string

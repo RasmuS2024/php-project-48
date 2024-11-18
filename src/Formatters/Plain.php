@@ -28,17 +28,16 @@ function getIterResult(mixed $valueComplex, string $value, string $property, boo
             return "Property '{$newProperty}' was updated. From {$oldValue} to {$newVal}\n";
         }
     }
-    $result = match ($valueComplex['type']) {
+    return match ($valueComplex['type']) {
         'added' => "Property '{$newProperty}' was added with value: {$oldValue}\n",
         'deleted' => "Property '{$newProperty}' was removed\n",
         default => '',
     };
-    return $result;
 }
 
 function iter(mixed $value1, string $level = ''): array
 {
-    $output = array_map(function ($key, $value) use ($level) {
+    return array_map(function ($key, $value) use ($level) {
         if (is_array($value) && array_key_exists('value', $value)) {
             if (is_array($value['value'])) {
                 $newLevel = getLevel($level, $value['key']);
@@ -53,7 +52,6 @@ function iter(mixed $value1, string $level = ''): array
             return $result;
         }
     }, array_keys($value1), $value1);
-    return $output;
 }
 
 function getPlainFormat(array $tree): string
