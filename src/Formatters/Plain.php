@@ -29,7 +29,6 @@ function getIterResult(mixed $valueComplex, string $value, string $property, boo
         }
     }
     $result = match ($valueComplex['type']) {
-        'notChanged' => '',
         'added' => "Property '{$newProperty}' was added with value: {$oldValue}\n",
         'deleted' => "Property '{$newProperty}' was removed\n",
         default => '',
