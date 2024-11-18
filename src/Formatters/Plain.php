@@ -24,14 +24,14 @@ function getIterResult(mixed $valueComplex, string $value, string $property, boo
     if (array_key_exists('new_value', $valueComplex)) {
         $tempValue = $valueComplex['new_value'];
         $newVal = is_string($tempValue) ? "'{$tempValue}'" : json_encode($tempValue);
-        if ($valueComplex['type'] === '_') {
+        if ($valueComplex['type'] === 'changed') {
             return "Property '{$newProperty}' was updated. From {$oldValue} to {$newVal}\n";
         }
     }
     $result = match ($valueComplex['type']) {
-        ' ' => '',
-        '+' => "Property '{$newProperty}' was added with value: {$oldValue}\n",
-        '-' => "Property '{$newProperty}' was removed\n",
+        'notChanged' => '',
+        'added' => "Property '{$newProperty}' was added with value: {$oldValue}\n",
+        'deleted' => "Property '{$newProperty}' was removed\n",
         default => '',
     };
     return $result;

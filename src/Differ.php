@@ -50,9 +50,9 @@ function getValue(mixed $inValue): mixed
     if (is_array($inValue)) {
         return array_map(function ($keyIn, $valueIn) {
             if (!is_array($valueIn)) {
-                return ['type' => ' ', 'key' => $keyIn, 'value' => $valueIn];
+                return ['type' => 'notChanged', 'key' => $keyIn, 'value' => $valueIn];
             }
-            return ['type' => ' ', 'key' => $keyIn, 'value' => getValue($valueIn)];
+            return ['type' => 'notChanged', 'key' => $keyIn, 'value' => getValue($valueIn)];
         }, array_keys($inValue), $inValue);
     }
     return $inValue;
@@ -63,19 +63,19 @@ function getArraysDiffer(mixed $data1, mixed $data2): mixed
     $sortedKeys = getSortedKeys($data1, $data2);
     return array_map(function ($key) use ($data1, $data2) {
         if (!array_key_exists($key, $data1)) {
-            return ['type' => '+', 'key' => $key, 'value' => getValue($data2[$key])];
+            return ['type' => 'added', 'key' => $key, 'value' => getValue($data2[$key])];
         }
         if (!array_key_exists($key, $data2)) {
-            return ['type' => '-', 'key' => $key, 'value' => getValue($data1[$key])];
+            return ['type' => 'deleted', 'key' => $key, 'value' => getValue($data1[$key])];
         }
         if (is_array($data1[$key]) && is_array($data2[$key])) {
-            return ['type' => ' ', 'key' => $key, 'value' => getArraysDiffer($data1[$key], $data2[$key])];
+            return ['type' => 'notChanged', 'key' => $key, 'value' => getArraysDiffer($data1[$key], $data2[$key])];
         }
         if ($data1[$key] === $data2[$key]) {
-            return ['type' => ' ', 'key' => $key, 'value' => $data1[$key]];
+            return ['type' => 'notChanged', 'key' => $key, 'value' => $data1[$key]];
         }
         $value = getValue($data1[$key]);
         $newValue = getValue($data2[$key]);
-        return ['type' => '_', 'key' => $key, 'value' => $value, 'new_value' => $newValue];
+        return ['type' => 'changed', 'key' => $key, 'value' => $value, 'new_value' => $newValue];
     }, $sortedKeys);
 }

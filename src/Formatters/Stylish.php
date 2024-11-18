@@ -13,12 +13,18 @@ function getIterResult(mixed $valueComplex, mixed $value, string $spaces): strin
 {
     $type = $valueComplex['type'];
     $key = $valueComplex['key'];
-    if ($type === "_") {
+    if ($type === "changed") {
         $tempValue = $valueComplex['new_value'];
         $newValue = is_string($tempValue) ? $tempValue : json_encode($tempValue);
         return "{$spaces}- {$key}: {$value}\n{$spaces}+ {$key}: {$newValue}\n";
     } else {
-        return "{$spaces}{$type} {$key}: {$value}\n";
+        $typeSymbol = match ($type) {
+            'added' => '+',
+            'deleted' => '-',
+            'notChanged' => ' ',
+            default => '',
+        };
+        return "{$spaces}{$typeSymbol} {$key}: {$value}\n";
     }
 }
 
