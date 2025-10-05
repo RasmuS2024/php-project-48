@@ -1,20 +1,27 @@
 name: Tests and Coverage
-on: push
+
+on: [push, pull_request]
+
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: make update
-      - run: make install
-      - run: make test
-      - run: make lint
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: xdebug
+      
+      - name: Install dependencies
+        run: composer install
       
       - name: Run tests with coverage
-        run: vendor/bin/phpunit --coverage-clover .phpunit.cache/code-coverage/clover.xml
+        run: vendor/bin/phpunit --coverage-clover phpunit.cache/code-coverage/clover.xml
       
       - name: Upload coverage to qlty.sh
         uses: qltysh/qlty-action/coverage@v2
         with:
           token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
-          files: b.phpunit.cache/code-coverage/clover.xml
+          files: phpunit.cache/code-coverage/clover.xml
