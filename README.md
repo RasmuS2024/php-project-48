@@ -25,8 +25,8 @@ The keys are displayed in alphabetical order.
 [![](https://github.com/RasmuS2024/php-project-48/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/RasmuS2024/php-project-48/actions)
 [![](https://github.com/RasmuS2024/php-project-48/actions/workflows/testworkflow.yml/badge.svg)](https://github.com/RasmuS2024/php-project-48/actions)
 ### Codeclimate maintainability and Test Coverage status:
-<a href="https://codeclimate.com/github/RasmuS2024/php-project-48/maintainability"><img src="https://api.codeclimate.com/v1/badges/c2ff5ccca2f4ef73463f/maintainability" /></a>
-<a href="https://codeclimate.com/github/RasmuS2024/php-project-48/test_coverage"><img src="https://api.codeclimate.com/v1/badges/c2ff5ccca2f4ef73463f/test_coverage" /></a>
+<a href="https://qlty.sh/gh/RasmuS2024/projects/php-project-48"><img src="https://qlty.sh/gh/RasmuS2024/projects/php-project-48/maintainability.png" alt="Maintainability" /></a>
+<a href="https://qlty.sh/gh/RasmuS2024/projects/php-project-48"><img src="https://qlty.sh/gh/RasmuS2024/projects/php-project-48/coverage.png" alt="Code Coverage" /></a>
 
 ## Prerequisites
 * Linux, WSL

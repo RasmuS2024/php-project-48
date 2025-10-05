@@ -1,0 +1,16 @@
+name: testworkflow
+# on – определяет события, которые запускают воркфлоу
+on: push
+jobs:
+  # build – произвольно выбранное имя задания
+  # их может быть больше одного
+  build:
+    # операционная система для работы воркфлоу
+    runs-on: ubuntu-latest
+    steps: # список шагов, которые надо выполнить
+      # экшен — выполняет какую-то задачу
+      # checkout — клонирует репозиторий
+      - uses: qltysh/qlty-action/coverage@v2
+        with:
+          token: {{secrets.QLTY_COVERAGE_TOKEN}}
+          files: build/logs/clover.xml
