@@ -11,10 +11,10 @@ jobs:
       - run: make lint
       
       - name: Run tests with coverage
-        run: vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+        run: vendor/bin/phpunit --coverage-clover .phpunit.cache/code-coverage/clover.xml
       
       - name: Upload coverage to qlty.sh
         uses: qltysh/qlty-action/coverage@v2
         with:
           token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
-          files: build/logs/clover.xml
+          files: b.phpunit.cache/code-coverage/clover.xml
