@@ -1,16 +1,20 @@
-name: testQltyCover
-# on – определяет события, которые запускают воркфлоу
+name: Tests and Coverage
 on: push
 jobs:
-  # build – произвольно выбранное имя задания
-  # их может быть больше одного
   build:
-    # операционная система для работы воркфлоу
     runs-on: ubuntu-latest
-    steps: # список шагов, которые надо выполнить
-      # экшен — выполняет какую-то задачу
-      # checkout — клонирует репозиторий
-      - uses: qltysh/qlty-action/coverage@v2
+    steps:
+      - uses: actions/checkout@v4
+      - run: make update
+      - run: make install
+      - run: make test
+      - run: make lint
+      
+      - name: Run tests with coverage
+        run: vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+      
+      - name: Upload coverage to qlty.sh
+        uses: qltysh/qlty-action/coverage@v2
         with:
-          token: ${{secrets.QLTY_COVERAGE_TOKEN}}
+          token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
           files: build/logs/clover.xml
