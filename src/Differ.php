@@ -13,15 +13,21 @@ function getDataFromFile(string $pathToFile): array
     if (!file_exists($pathToFile)) {
         throw new \RuntimeException("File '{$pathToFile}' not found.");
     }
-    $fileExtension = array_key_exists('extension', pathinfo($pathToFile)) ? pathinfo($pathToFile)['extension'] : false;
+
+    $pathInfo = pathinfo($pathToFile);
+    $fileExtension = isset($pathInfo['extension']) ? $pathInfo['extension'] : false;
+
     if (!in_array($fileExtension, ALLOWED_FILE_TYPES, true)) {
         $allowedFileTypesString = implode("', '", ALLOWED_FILE_TYPES);
         throw new \RuntimeException("File extension is not allowed! Allowed types: '{$allowedFileTypesString}'.");
     }
+
     $fileContents = file_get_contents($pathToFile);
+
     if ($fileContents === false) {
         throw new \RuntimeException("Unable to read file {$pathToFile}.");
     }
+
     return ['extension' => $fileExtension, 'data' => $fileContents];
 }
 

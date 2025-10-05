@@ -4,7 +4,7 @@ namespace Differ\Formatters\Stylish;
 
 use function Functional\flatten;
 
-function getLevelSpaces(int $level)
+function getLevelSpaces(int $level): string
 {
     return str_repeat(' ', $level * 4 - 2);
 }
